@@ -36,8 +36,7 @@ func _physics_process(delta: float) -> void:
 	if input_dir != Vector2(0,0):
 		$MeshInstance3D.rotation_degrees.y = $Camera_Controller.rotation_degrees.y - rad_to_deg(input_dir.angle()) - 90 
 	
-	print($RayCast3D.get_collision_normal())
-	if is_on_floor():
+	if is_on_floor() and input_dir != Vector2(0,0):
 		align_with_floor($RayCast3D.get_collision_normal())
 		global_transform = global_transform.interpolate_with(xform, 0.3)
 	elif not is_on_floor():
@@ -65,3 +64,7 @@ func align_with_floor(floor_normal):
 	xform.basis = xform.basis.orthonormalized()
 	
 	
+
+
+func _on_fall_zone_body_entered(body: Node3D) -> void:
+	get_tree().change_scene_to_file("res://level_1.tscn")
