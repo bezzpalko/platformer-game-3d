@@ -1,15 +1,18 @@
 [gd_scene format=3 uid="uid://c115r8mocvqq8"]
 
 [ext_resource type="PackedScene" uid="uid://b32440loh4ttm" path="res://block.tscn" id="1_3hls8"]
+[ext_resource type="Script" uid="uid://do0hs7baapiuu" path="res://level_1.gd" id="1_5hph3"]
 [ext_resource type="PackedScene" uid="uid://cv5xvuq2rh5ot" path="res://steve.tscn" id="2_hbghi"]
 [ext_resource type="Environment" uid="uid://da0e0resk3erv" path="res://Resources/level_1_environment.tres" id="4_ihfcg"]
 [ext_resource type="MeshLibrary" uid="uid://m3qtj04tw8j8" path="res://Resources/world-blocks-v1.tres" id="5_5hph3"]
 [ext_resource type="PackedScene" uid="uid://dbxs52if8rhw0" path="res://coin.tscn" id="5_rka8t"]
+[ext_resource type="PackedScene" uid="uid://tn84iu8qyl2r" path="res://hud.tscn" id="7_j7kpp"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rka8t"]
 size = Vector3(74.16365, 4.567871, 56.2193)
 
 [node name="Level1" type="Node3D" unique_id=167113189]
+script = ExtResource("1_5hph3")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1003836931]
 transform = Transform3D(0.9919785, -0.04565212, 0.11787512, -0.07518251, 0.5365621, 0.84050506, -0.101618156, -0.84262514, 0.5288259, 0.4186468, 11.118393, 6.777594)
@@ -24,16 +27,13 @@ transform = Transform3D(1, 0, 0, 0, 0.5301117, -0.8479278, 0, 0.8479278, 0.53011
 transform = Transform3D(0.820002, 0.30341503, -0.48532045, -0.57236063, 0.4346927, -0.6953026, 0, 0.8479279, 0.53011173, 0, 4.640191, 0)
 
 [node name="Block3" parent="Blocks" unique_id=965023289 instance=ExtResource("1_3hls8")]
-transform = Transform3D(1, 0, 0, 0, 0.5301117, -0.8479278, 0, 0.8479278, 0.5301117, 17.599358, 6.6035547, 0)
+transform = Transform3D(1, 0, 0, 0, 0.5301117, -0.8479278, 0, 0.8479278, 0.5301117, 0.13507462, 6.6035547, 0)
 
 [node name="Block4" parent="Blocks" unique_id=1437837842 instance=ExtResource("1_3hls8")]
 transform = Transform3D(1, 0, 0, 0, 0.8107166, -0.58543897, 0, 0.58543897, 0.8107166, 0, 8.900601, 0)
 
 [node name="Steve" parent="." unique_id=860385635 instance=ExtResource("2_hbghi")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.279497, 1, 0)
-
-[node name="Coin1" parent="." unique_id=1192698193 instance=ExtResource("5_rka8t")]
-transform = Transform3D(-0.08597332, 0.9962914, -0.0034603393, 0, -0.0034731992, -0.9999939, -0.99629736, -0.08597283, 0.00029860256, 6.123969, 1.0627098, -0.3168993)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.279, 1, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=506671905]
 environment = ExtResource("4_ihfcg")
@@ -54,5 +54,25 @@ collision_layer = 16
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FallZone" unique_id=484687514]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.8576736, 1.7839355, 7.9305115)
 shape = SubResource("BoxShape3D_rka8t")
+
+[node name="Coins" type="Node3D" parent="." unique_id=939017271]
+
+[node name="Coin1" parent="Coins" unique_id=1192698193 node_paths=PackedStringArray("hud") instance=ExtResource("5_rka8t")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -8.616367, 1.0627098, -6.5072646)
+hud = NodePath("../../HUD")
+
+[node name="Coin2" parent="Coins" unique_id=65748517 node_paths=PackedStringArray("hud") instance=ExtResource("5_rka8t")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -8.585891, 1.0627098, -8.530054)
+hud = NodePath("../../HUD")
+
+[node name="Coin3" parent="Coins" unique_id=2050514299 node_paths=PackedStringArray("hud") instance=ExtResource("5_rka8t")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -8.616367, 1.0627098, -2.7722158)
+hud = NodePath("../../HUD")
+
+[node name="Coin4" parent="Coins" unique_id=236080656 node_paths=PackedStringArray("hud") instance=ExtResource("5_rka8t")]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -8.585891, 1.0627098, -4.795006)
+hud = NodePath("../../HUD")
+
+[node name="HUD" parent="." unique_id=833858211 instance=ExtResource("7_j7kpp")]
 
 [connection signal="body_entered" from="FallZone" to="Steve" method="_on_fall_zone_body_entered"]
